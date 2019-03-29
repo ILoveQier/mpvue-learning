@@ -1,0 +1,41 @@
+<template>
+  <div class="list-container">
+    <swiper indicator-dots="true" indicator-color="#34ba" autoplay="true" interval="10000" indicator-active-color="red">
+      <swiper-item v-for="(item,i) in items" :key="i">
+        <img :src="item" alt>
+      </swiper-item>
+    </swiper>
+    <listTmp/>
+  </div>
+</template>
+
+<script>
+import listTmp from '../list_template/list_template'
+export default {
+  components:{
+    listTmp
+  },
+  data() {
+    return {
+      items:[
+        "../../../static/images/112.jpg",
+        "../../../static/images/timg.jpg",
+        "../../../static/images/user.png"
+      ]
+    };
+  }
+};
+</script>
+
+<style lang='less'>
+.list-container {
+  swiper {
+    width: 100%;
+    height: 400rpx;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+</style>

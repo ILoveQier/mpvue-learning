@@ -1,9 +1,11 @@
 <template>
   <div class="index-container">
     <img v-if="isPermission" class="index-img" :src="userInfo.avatarUrl" alt>
-    <Button class="btn" v-else open-type="getUserInfo" @getuserinfo="getUserInfo">点击获取用户信息</Button>
+    <button class="btn" v-else open-type="getUserInfo" @getuserinfo="getUserInfo">点击获取用户信息</button>
     <p class="user-name">hello {{userInfo.nickName}}</p>
-    <p class="go-stud">开启小程序 之旅</p>
+    <div @tap="tapstud" class="go-stud">
+      <p>开启小程序之旅</p>
+    </div>
   </div>
 </template>
 
@@ -16,15 +18,24 @@ export default {
     };
   },
   beforeMount() {
-    this.handleUserInfo()
+    this.handleUserInfo();
   },
   methods: {
+    tapstud() {
+      wx.navigateTo({
+        url: '/pages/list/main',
+        success: (result)=>{
+
+        },
+        fail: ()=>{},
+        complete: ()=>{}
+      });
+    },
     handleUserInfo() {
       wx.getUserInfo({
         success: data => {
-          this.userInfo = data.userInfo
-          this.isPermission = true 
-          console.log(this.userInfo);
+          this.userInfo = data.userInfo;
+          this.isPermission = true;
         },
         fail: () => {
           console.log("获取失败");
@@ -33,7 +44,7 @@ export default {
     },
     getUserInfo(data) {
       if (data.mp.detail.rawData) {
-        this.handleUserInfo()
+        this.handleUserInfo();
       }
     }
   }
@@ -47,7 +58,8 @@ page {
   display: flex;
   flex-direction: column;
   align-items: center;
-  .index-img,.btn {
+  .index-img,
+  .btn {
     width: 200rpx;
     height: 200rpx;
     border-radius: 50%;
@@ -73,6 +85,7 @@ page {
     border-radius: 10rpx;
     text-align: center;
     font-weight: bold;
+    padding: 10rpx;
   }
 }
 </style>
