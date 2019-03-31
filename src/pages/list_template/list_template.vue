@@ -1,22 +1,26 @@
 <template>
   <div class="tmp-container">
     <div class="avator">
-      <img src="../../../static/images/7.jpg" alt>
-      <span>2019-03-29</span>
+      <img :src="item.detail_img" alt>
+      <span>{{item.date}}</span>
     </div>
-    <p class="company">学习堂</p>
-    <img class="class-img" src="../../../static/images/0.jpg" alt>
+    <p class="company">{{item.title}}</p>
+    <img class="class-img" :src="item.detail_img" alt>
     <p class="content">emit 圣诞快乐翻记录司空见惯克鲁赛德机构咚咚咚咚咚咚uugUGGuasdfklalsdg挂电视剧赶快回去健康的说法就就是读后感</p>
     <div class="icon-class">
       <img src="../../../static/images/star.png" alt>
-      <span>66</span>
+      <span>{{item.love_count}}</span>
       <img src="../../../static/images/view.png" alt>
-      <span>88</span>
+      <span>{{item.attention_count}}</span>
     </div>
   </div>
 </template>
 <script>
-export default {};
+export default {
+  props:[
+    'item','index'
+  ]
+};
 </script>
 <style lang="less">
 .tmp-container {

@@ -5,15 +5,22 @@
         <img :src="item" alt>
       </swiper-item>
     </swiper>
-    <listTmp/>
+    <listTmp v-for="(item,i) in listTmp" :key="i" :item='item' :index='i'/>
   </div>
 </template>
 
 <script>
+import {mapState} from 'vuex'
 import listTmp from '../list_template/list_template'
 export default {
   components:{
     listTmp
+  },
+  beforeMount() {
+    this.$store.dispatch('getList')
+  },
+  computed: {
+    ...mapState(['listTmp'])
   },
   data() {
     return {
