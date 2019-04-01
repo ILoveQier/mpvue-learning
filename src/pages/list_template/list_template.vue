@@ -8,9 +8,9 @@
     <img class="class-img" :src="item.detail_img" alt>
     <p class="content" style="padding:10rpx">{{item.detail_content}}</p>
     <div class="icon-class">
-      <img src="../../../static/images/star.png" alt>
+      <img src="cloud://test-c9f00f.7465-test-c9f00f/static/images/icon/star.png" alt>
       <span>{{item.love_count}}</span>
-      <img src="../../../static/images/view.png" alt>
+      <img src="cloud://test-c9f00f.7465-test-c9f00f/static/images/icon/view.png" alt>
       <span>{{item.attention_count}}</span>
     </div>
   </div>

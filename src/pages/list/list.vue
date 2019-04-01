@@ -25,10 +25,10 @@ export default {
   data() {
     return {
       items:[
-        "/static/list/p1.jpg",
-        "/static/list/p2.jpg",
-        "/static/list/p3.jpg",
-        "/static/list/p4.jpg",
+        "cloud://test-c9f00f.7465-test-c9f00f/static/list/p1.jpg",
+        "cloud://test-c9f00f.7465-test-c9f00f/static/list/p2.jpg",
+        "cloud://test-c9f00f.7465-test-c9f00f/static/list/p3.jpg",
+        "cloud://test-c9f00f.7465-test-c9f00f/static/list/p4.jpg",
       ]
     };
   }

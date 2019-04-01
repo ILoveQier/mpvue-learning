@@ -1,6 +1,14 @@
 <template>
   <div class="detail-container">
-    <img class="header" :src="detailObj.detail_img" alt>
+    <div class="img-box">
+      <img class="my-img" :src="isPlay?detailObj.music.coverImgUrl:detailObj.detail_img" alt>
+      <img
+        @tap="handleMusic"
+        class="play"
+        :src="'cloud://test-c9f00f.7465-test-c9f00f/static/images/music/music-'+(isPlay?'stop':'start')+'.png'"
+        alt
+      >
+    </div>
     <div class="content">
       <img :src="detailObj.avatar" alt>
       <span>{{detailObj.author}}</span>
@@ -12,11 +20,11 @@
       <div class="imgs">
         <img
           @tap="handleCollected"
-          :src="'/static/images/icon/collection'+(isCollected ? '' : '-anti') + '.png'"
+          :src="'cloud://test-c9f00f.7465-test-c9f00f/static/images/icon/collection'+(isCollected ? '' : '-anti') + '.png'"
         >
         <img
           @tap="handleShared"
-          :src="'/static/images/icon/share'+(isShared ? '' : '-anti') + '.png'"
+          :src="'cloud://test-c9f00f.7465-test-c9f00f/static/images/icon/share'+(isShared ? '' : '-anti') + '.png'"
           alt
         >
       </div>
@@ -29,13 +37,17 @@
 
 <script>
 import { mapState } from "vuex";
+import isPlayObj from "../../datas/isPlay.js";
 export default {
   data() {
     return {
       routeQuery: null,
       detailObj: {},
       isCollected: false,
-      isShared: false
+      isShared: false,
+      index: 0,
+      isPlay: false,
+      music: {}
     };
   },
   computed: {
@@ -43,24 +55,57 @@ export default {
   },
   beforeMount() {
     this.routeQuery = JSON.parse(JSON.stringify(this.getRoute()));
-    this.detailObj = this.listTmp[this.routeQuery.index];
+    this.index = this.routeQuery.index;
+    this.detailObj = this.listTmp[this.index];
+
+    let oldStorage = wx.getStorageSync("isCollected");
+    if (!oldStorage) {
+      wx.setStorageSync("isCollected", {})
+    } else {
+      this.isCollected = !!oldStorage[this.index]
+    }
+    console.log(this.isPlayObj);
+    
+    this.isPlayObj.pageIndex === this.index && ths.isPlayObj.isPlay ? this.isPlay = true: this.isPlay =false
+    this.music = wx.getBackgroundAudioManager()
+    this.music.title = this.detailObj.music.title
+    this.music.onPlay(() => {
+      this.isPlayObj.pageIndex = this.index
+      this.isPlayObj.isPlay = true
+      this.isPlay = true
+    });
+    this.music.onPause(() => {
+      this.isPlayObj.isPlay = false
+      this.isPlay = false
+    });
   },
   methods: {
     handleCollected() {
       this.isCollected = !this.isCollected;
       wx.showToast({
-        title: this.isCollected?"收藏成功":"取消收藏",
+        title: this.isCollected ? "收藏成功" : "取消收藏",
         icon: "success",
         duration: 1000
       });
+      let oldStorage = wx.getStorageSync("isCollected");
+      oldStorage[this.index] = this.isCollected;
+      wx.setStorageSync("isCollected", oldStorage);
     },
     handleShared() {
       this.isShared = !this.isShared;
       wx.showToast({
-        title: this.isShared?"分享成功":"取消分享",
+        title: this.isShared ? "分享成功" : "取消分享",
         icon: "success",
         duration: 2000
       });
+    },
+    handleMusic() {
+      this.isPlay = !this.isPlay
+      if (this.isPlay) {
+        this.music.src = this.detailObj.music.dataUrl
+      } else {
+        this.music.pause()
+      }
     }
   }
 };
@@ -69,9 +114,20 @@ export default {
 .detail-container {
   display: flex;
   flex-direction: column;
-  .header {
-    width: 100%;
-    height: 460rpx;
+  .img-box {
+    position: relative;
+    .play {
+      width: 60rpx;
+      height: 60rpx;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .my-img {
+      width: 100%;
+      height: 460rpx;
+    }
   }
   .content {
     margin: 10rpx;

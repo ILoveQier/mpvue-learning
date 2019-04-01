@@ -1,9 +1,10 @@
 {
   "pages": [
-    "pages/index/main",
     "pages/list/main",
+    "pages/index/main",
     "pages/details/main"
   ],
+  "requiredBackgroundModes": ["audio"],
   "window": {
     "navigationBarBackgroundColor": "#489b82"
   }
