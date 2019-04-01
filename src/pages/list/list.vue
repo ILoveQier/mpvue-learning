@@ -34,7 +34,7 @@ export default {
 };
 </script>
 
-<style lang='less'>
+<style lang="less" scoped>
 .list-container {
   swiper {
     width: 100%;

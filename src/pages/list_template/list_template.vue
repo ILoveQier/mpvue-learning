@@ -16,63 +16,70 @@
   </div>
 </template>
 <script>
-export default {
-  props:[
-    'item','index'
-  ]
-};
+  export default {
+    props: [
+      'item', 'index'
+    ]
+  };
 </script>
-<style lang="less">
-.tmp-container {
-  margin-top: 50rpx;
-  display: flex;
-  flex-direction: column;
-  border-bottom: 1rpx solid #333;
-  .avator {
+<style lang="less" scoped>
+  .tmp-container {
+    margin-top: 50rpx;
     display: flex;
-    align-items: center;
-    img {
-      width: 60rpx;
-      height: 60rpx;
-      border-radius: 50%;
-      margin: 0 30rpx;
+    flex-direction: column;
+    border-bottom: 1rpx solid #333;
+    .avator {
+      display: flex;
+      align-items: center;
+      img {
+        width: 60rpx;
+        height: 60rpx;
+        border-radius: 50%;
+        margin: 0 30rpx;
+      }
+
+      span {
+        font-size: 28rpx;
+        color: #333;
+      }
     }
-    span {
-      font-size: 28rpx;
-      color: #333;
+
+    .company {
+      font-weight: bold;
+      font-size: 40rpx;
+      padding: 20rpx;
+    }
+
+    .class-img {
+      width: 100%;
+      height: 460rpx;
+      margin-bottom: 30rpx;
+    }
+
+    .content {
+      font-size: 30rpx;
+      text-indent: 50rpx;
+      line-height: 50rpx;
+      word-spacing: 5rpx;
+      letter-spacing: 5rpx;
+    }
+
+    .icon-class {
+      display: flex;
+      align-items: center;
+      padding: 20rpx;
+
+      img {
+        width: 42rpx;
+        height: 42rpx;
+        margin-right: 10rpx;
+      }
+
+      span {
+        font-size: 20rpx;
+        color: #333;
+        margin-right: 20rpx;
+      }
     }
   }
-  .company {
-    font-weight: bold;
-    font-size: 40rpx;
-    padding: 20rpx;
-  }
-  .class-img {
-    width: 100%;
-    height: 460rpx;
-    margin-bottom: 30rpx;
-  }
-  .content {
-    font-size: 30rpx;
-    text-indent: 50rpx;
-    line-height: 50rpx;
-    word-spacing: 5rpx;
-    letter-spacing: 5rpx;
-  }
-  .icon-class {
-    display: flex;
-    align-items: center;
-    padding: 20rpx;
-    img {
-      width: 42rpx;
-      height: 42rpx;
-      margin-right: 10rpx;
-    }
-    span {
-      font-size: 20rpx;
-      color:#333;
-      margin-right: 20rpx;
-    }
-  }
-}
 </style>
