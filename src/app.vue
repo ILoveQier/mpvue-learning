@@ -4,6 +4,6 @@ export default {
 }
 </script>
 
-<style lang="js" scope>
+<style lang="less" scope>
   
 </style>

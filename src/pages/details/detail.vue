@@ -1,27 +1,69 @@
 <template>
   <div class="detail-container">
-    <img class="header" src="../../../static/images/112.jpg" alt>
+    <img class="header" :src="detailObj.detail_img" alt>
     <div class="content">
-      <img src="/static/images/3.jpg" alt>
-      <span>新华社</span>
+      <img :src="detailObj.avatar" alt>
+      <span>{{detailObj.author}}</span>
       <span>发布于</span>
-      <span>2019</span>
+      <span>{{detailObj.date}}</span>
     </div>
-    <p class="short-content">假的经文简洁</p>
+    <p class="short-content">{{detailObj.title}}</p>
     <div class="imgs-container">
       <div class="imgs">
-        <img src="/static/images/save.png" alt>
-        <img src="/static/images/share.png" alt>
+        <img
+          @tap="handleCollected"
+          :src="'/static/images/icon/collection'+(isCollected ? '' : '-anti') + '.png'"
+        >
+        <img
+          @tap="handleShared"
+          :src="'/static/images/icon/share'+(isShared ? '' : '-anti') + '.png'"
+          alt
+        >
       </div>
       <div class="line"></div>
     </div>
     <Button>转发此文章</Button>
-    <p class="content-zhu">朱茵是我的你是谁规划哦is噶搜IE哦我怪盗基德撒即可冷风机卡拉胶刚结婚就就卡水底纳瓜经电视剧伤筋动骨就看</p>
+    <p class="content-zhu">{{detailObj.detail_content}}</p>
   </div>
 </template>
 
 <script>
-export default {};
+import { mapState } from "vuex";
+export default {
+  data() {
+    return {
+      routeQuery: null,
+      detailObj: {},
+      isCollected: false,
+      isShared: false
+    };
+  },
+  computed: {
+    ...mapState(["listTmp"])
+  },
+  beforeMount() {
+    this.routeQuery = JSON.parse(JSON.stringify(this.getRoute()));
+    this.detailObj = this.listTmp[this.routeQuery.index];
+  },
+  methods: {
+    handleCollected() {
+      this.isCollected = !this.isCollected;
+      wx.showToast({
+        title: this.isCollected?"收藏成功":"取消收藏",
+        icon: "success",
+        duration: 1000
+      });
+    },
+    handleShared() {
+      this.isShared = !this.isShared;
+      wx.showToast({
+        title: this.isShared?"分享成功":"取消分享",
+        icon: "success",
+        duration: 2000
+      });
+    }
+  }
+};
 </script>
 <style lang="less" scoped>
 .detail-container {

@@ -25,9 +25,10 @@ export default {
   data() {
     return {
       items:[
-        "../../../static/images/112.jpg",
-        "../../../static/images/timg.jpg",
-        "../../../static/images/user.png"
+        "/static/list/p1.jpg",
+        "/static/list/p2.jpg",
+        "/static/list/p3.jpg",
+        "/static/list/p4.jpg",
       ]
     };
   }

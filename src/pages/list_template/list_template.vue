@@ -1,12 +1,12 @@
 <template>
-  <div class="tmp-container">
+  <div @tap="goDetail" class="tmp-container">
     <div class="avator">
       <img :src="item.detail_img" alt>
       <span>{{item.date}}</span>
     </div>
     <p class="company">{{item.title}}</p>
     <img class="class-img" :src="item.detail_img" alt>
-    <p class="content">emit 圣诞快乐翻记录司空见惯克鲁赛德机构咚咚咚咚咚咚uugUGGuasdfklalsdg挂电视剧赶快回去健康的说法就就是读后感</p>
+    <p class="content" style="padding:10rpx">{{item.detail_content}}</p>
     <div class="icon-class">
       <img src="../../../static/images/star.png" alt>
       <span>{{item.love_count}}</span>
@@ -19,7 +19,14 @@
   export default {
     props: [
       'item', 'index'
-    ]
+    ],
+    methods: {
+      goDetail() {
+        wx.navigateTo({
+          url: '/pages/details/main?index='+this.index,
+        });  
+      }
+    },
   };
 </script>
 <style lang="less" scoped>
