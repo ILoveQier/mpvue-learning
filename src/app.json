@@ -1,9 +1,9 @@
 {
   "pages": [
+    "pages/index/main",
     "pages/movies/main",
     "pages/list/main",
     "pages/moviesDetail/main",
-    "pages/index/main",
     "pages/details/main"
   ],
   "requiredBackgroundModes": ["audio"],

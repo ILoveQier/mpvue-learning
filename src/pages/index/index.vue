@@ -22,7 +22,7 @@ export default {
   },
   methods: {
     tapstud() {
-      wx.navigateTo({
+      wx.switchTab({
         url: '/pages/list/main',
         success: (result)=>{
 
