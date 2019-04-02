@@ -10,6 +10,8 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   data() {
     return {
@@ -17,21 +19,54 @@ export default {
       isPermission: false
     };
   },
+  computed: {
+    ...mapState(["mapObj"])
+  },
   beforeMount() {
     this.handleUserInfo();
+    this.handleMapInfo();
+  },
+  mounted() {
+    wx.showShareMenu();
   },
   methods: {
+    handleMapInfo() {
+      wx.getSetting({
+        success: res => {
+          if (!res.authSetting["scope.userLocation"]) {
+            wx.authorize({
+              scope: "scope.userLocation",
+              success: res => {
+                wx.getLocation({
+                  type: "gcj02", // 返回可以用于wx.openLocation的经纬度
+                  success: res => {
+                    this.mapObj.latitude = res.latitude;
+                    this.mapObj.longitude = res.longitude;
+                  }
+                });
+              }
+            });
+          }
+        }
+      });
+    },
     tapstud() {
       wx.switchTab({
-        url: '/pages/list/main',
-        success: (result)=>{
-
-        },
-        fail: ()=>{},
-        complete: ()=>{}
+        url: "/pages/list/main",
+        success: result => {},
+        fail: () => {},
+        complete: () => {}
       });
     },
     handleUserInfo() {
+      wx.login({
+        timeout: 10000,
+        success: result => {
+          console.log(result);
+        },
+        fail: () => {},
+        complete: () => {}
+      });
       wx.getUserInfo({
         success: data => {
           this.userInfo = data.userInfo;

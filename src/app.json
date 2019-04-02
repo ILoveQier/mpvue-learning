@@ -6,6 +6,11 @@
     "pages/moviesDetail/main",
     "pages/details/main"
   ],
+  "permission":{
+    "scope.userLocation" : {
+      "desc":"显示位置"
+    }
+  },
   "requiredBackgroundModes": ["audio"],
   "window": {
     "navigationBarBackgroundColor": "#489b82"
