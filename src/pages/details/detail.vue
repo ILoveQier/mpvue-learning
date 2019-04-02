@@ -30,7 +30,7 @@
       </div>
       <div class="line"></div>
     </div>
-    <Button>转发此文章</Button>
+    <Button open-type="share">转发此文章</Button>
     <p class="content-zhu">{{detailObj.detail_content}}</p>
   </div>
 </template>
@@ -60,23 +60,24 @@ export default {
 
     let oldStorage = wx.getStorageSync("isCollected");
     if (!oldStorage) {
-      wx.setStorageSync("isCollected", {})
+      wx.setStorageSync("isCollected", {});
     } else {
-      this.isCollected = !!oldStorage[this.index]
+      this.isCollected = !!oldStorage[this.index];
     }
-    console.log(this.isPlayObj);
-    
-    this.isPlayObj.pageIndex === this.index && ths.isPlayObj.isPlay ? this.isPlay = true: this.isPlay =false
-    this.music = wx.getBackgroundAudioManager()
-    this.music.title = this.detailObj.music.title
+
+    parseInt(isPlayObj.pageIndex, 10) === this.index && isPlayObj.isPlay
+      ? (this.isPlay = true)
+      : (this.isPlay = false);
+    this.music = wx.getBackgroundAudioManager();
+    this.music.title = this.detailObj.music.title;
     this.music.onPlay(() => {
-      this.isPlayObj.pageIndex = this.index
-      this.isPlayObj.isPlay = true
-      this.isPlay = true
+      isPlayObj.pageIndex = this.index;
+      isPlayObj.isPlay = true;
+      this.isPlay = true;
     });
     this.music.onPause(() => {
-      this.isPlayObj.isPlay = false
-      this.isPlay = false
+      isPlayObj.isPlay = false;
+      this.isPlay = false;
     });
   },
   methods: {
@@ -92,6 +93,15 @@ export default {
       wx.setStorageSync("isCollected", oldStorage);
     },
     handleShared() {
+      wx.showActionSheet({
+        itemList: ["分享到朋友圈","分享到微博"],
+        success(res) {
+          console.log(res.tapIndex);
+        },
+        fail(res) {
+          console.log(res.errMsg);
+        }
+      });
       this.isShared = !this.isShared;
       wx.showToast({
         title: this.isShared ? "分享成功" : "取消分享",
@@ -100,11 +110,11 @@ export default {
       });
     },
     handleMusic() {
-      this.isPlay = !this.isPlay
+      this.isPlay = !this.isPlay;
       if (this.isPlay) {
-        this.music.src = this.detailObj.music.dataUrl
+        this.music.src = this.detailObj.music.dataUrl;
       } else {
-        this.music.pause()
+        this.music.pause();
       }
     }
   }
