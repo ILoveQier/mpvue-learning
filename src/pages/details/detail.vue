@@ -37,7 +37,6 @@
 
 <script>
 import { mapState } from "vuex";
-import isPlayObj from "../../datas/isPlay.js";
 export default {
   data() {
     return {
@@ -51,11 +50,10 @@ export default {
     };
   },
   computed: {
-    ...mapState(["listTmp"])
+    ...mapState(["listTmp","isPlayObj"])
   },
   beforeMount() {
-    this.routeQuery = JSON.parse(JSON.stringify(this.getRoute()));
-    this.index = this.routeQuery.index;
+    this.index = this.getRoute();
     this.detailObj = this.listTmp[this.index];
 
     let oldStorage = wx.getStorageSync("isCollected");
@@ -65,18 +63,20 @@ export default {
       this.isCollected = !!oldStorage[this.index];
     }
 
-    parseInt(isPlayObj.pageIndex, 10) === this.index && isPlayObj.isPlay
+    (this.isPlayObj.pageIndex === this.index) && this.isPlayObj.isPlay
       ? (this.isPlay = true)
       : (this.isPlay = false);
+      console.log(this.isPlayObj.pageIndex === this.index)
+      
     this.music = wx.getBackgroundAudioManager();
     this.music.title = this.detailObj.music.title;
     this.music.onPlay(() => {
-      isPlayObj.pageIndex = this.index;
-      isPlayObj.isPlay = true;
+      this.isPlayObj.pageIndex = this.index;
+      this.isPlayObj.isPlay = true;
       this.isPlay = true;
     });
     this.music.onPause(() => {
-      isPlayObj.isPlay = false;
+      this.isPlayObj.isPlay = false;
       this.isPlay = false;
     });
   },

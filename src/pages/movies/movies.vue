@@ -1,18 +1,44 @@
 <template>
   <div class="movies-container">
-    <div class="movies-item">
-      <img src="../../../static/tab/dianying.png" alt>
+    <div @tap="goDetail(i)" v-for="(item,i) in moviesArr" class="movies-item">
+      <img :src="item.images.large" alt>
       <div class="movies-info">
-        <span>肖申克救赎</span>
-        <span>年份:1994</span>
-        <span>导演:斯皮尔伯格</span>
+        <span>{{item.title}}</span>
+        <span>年份:{{item.year}}</span>
+        <span>导演:{{item.directors[0].name}}</span>
       </div>
-      <span class="point">9.6</span>
+      <span class="point">{{item.rating.average}}</span>
     </div>
   </div>
 </template>
 <script>
-export default {};
+const MOVIE_URL = "http://t.yushu.im/v2/movie/top250";
+
+export default {
+  data() {
+    return {
+      moviesArr: []
+    };
+  },
+  methods: {
+    goDetail(i) {
+      wx.navigateTo({
+        url: "/pages/moviesDetail/main?index=" + i
+      });
+    }
+  },
+  beforeMount() {
+    this.$fly
+      .get(MOVIE_URL)
+      .then(response => {
+        this.moviesArr = response.data.subjects || [];
+        this.$store.dispatch("getMovies", this.moviesArr);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+};
 </script>
 <style lang="less">
 .movies-container {
@@ -30,11 +56,15 @@ export default {};
       display: flex;
       flex-direction: column;
       margin-left: 20rpx;
-      width: 70%;
+      margin-right: 60rpx;
+      width: 60%;
       span {
         font-size: 32rpx;
         color: #333;
         padding: 5rpx;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
         &:nth-child(2) {
           font-size: 30rpx;
           color: #999;
